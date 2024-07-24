@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ultima prueba", "ultima prueba\ultima prueba.csproj", "{D40C98A3-9233-4282-944A-39CA6DC9840A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oracleDataAcess", "oracleDataAcess\oracleDataAcess.csproj", "{CCC98C71-7B00-4E0F-BF73-95236234DFE1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D40C98A3-9233-4282-944A-39CA6DC9840A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D40C98A3-9233-4282-944A-39CA6DC9840A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D40C98A3-9233-4282-944A-39CA6DC9840A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D40C98A3-9233-4282-944A-39CA6DC9840A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCC98C71-7B00-4E0F-BF73-95236234DFE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCC98C71-7B00-4E0F-BF73-95236234DFE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCC98C71-7B00-4E0F-BF73-95236234DFE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCC98C71-7B00-4E0F-BF73-95236234DFE1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ED6091C1-7067-40EC-8B66-92C071DC2B5B}
+	EndGlobalSection
+EndGlobal
