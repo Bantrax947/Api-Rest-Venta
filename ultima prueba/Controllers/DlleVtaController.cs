@@ -39,27 +39,28 @@ namespace ultima_prueba.Controllers
 
             try
             {
-                dllevent.Iddventa = c.Idvta;
+                dllevent.Idvta = c.Idvta;
                 dllevent.Idprod = c.Idprod;
                 dllevent.Cantidad = c.Cantidad;
 
                 var product = await _context.Productos.FirstOrDefaultAsync(x => x.Idproducto == c.Idprod);
+                var venta = await _context.Venta.FirstOrDefaultAsync(x => x.Idventa== c.Idvta);
                 var subTotal = 0;
                 if (product != null)
                 {
-                    if (product.Cantidad < c.Cantidad)
+                    if (c.Cantidad < product.Cantidad)
                     {
+
                         subTotal = Convert.ToInt32(product.Preciounit) * c.Cantidad;
                     } else
                     {
                         return BadRequest($"No hay suficiente stock disponible. Stock actual: {product.Cantidad}");
                     }
-
                 } else
                 {
                     return StatusCode(500, "El Idproducto no existe.");
                 }
-
+                dllevent.Subtotal = subTotal;
                 await _context.Dlleventa.AddAsync(dllevent);
                 await _context.SaveChangesAsync();
                 dllevent.Iddventa = await _context.Dlleventa.MaxAsync(u => u.Iddventa);

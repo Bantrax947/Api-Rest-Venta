@@ -13,7 +13,7 @@ public partial class Ventum
 
     public decimal? Montototal { get; set; }
 
-    public char Estado { get; set; }
+    public string? Estado { get; set; }
 
     public virtual ICollection<Dlleventum> Dlleventa { get; set; } = new List<Dlleventum>();
 

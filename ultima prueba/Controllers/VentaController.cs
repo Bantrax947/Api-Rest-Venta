@@ -40,13 +40,13 @@ namespace ultima_prueba.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult<Ventum>> SaveAsync(VtaCommand c)
+        public async Task<ActionResult<Ventum>> SaveAsync(VtaCreateCommand c)
         {
             Ventum venta = new Ventum();    
             venta.Idclient = c.Idclient;
             venta.Fchaope = c.Fchaope;
             venta.Montototal = 0;
-            venta.Estado=(char)EstadoEnum.PENDIENTE;
+            venta.Estado=((char)EstadoEnum.PENDIENTE).ToString();
 
 
             try
@@ -64,28 +64,30 @@ namespace ultima_prueba.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Ventum>> UpdateAsync(Ventum c)
+        public async Task<ActionResult<Ventum>> UpdateAsync(VtaUpdateCommond c)
         {
-            if (c == null || c.Idventa == 0)
-                return BadRequest("Faltan datos");
+            Ventum cat = await _context.Venta.FirstOrDefaultAsync(x => x.Idventa == x.Idventa);
 
-            Ventum cat = await _context.Venta.FirstOrDefaultAsync(x => x.Idventa == c.Idventa);
+            if (c == null)
+                return NotFound($"No se encontró una venta con {c.Idventa}");
 
-            if (cat == null)
-                return NotFound();
+       
+
+          
 
             try
             {
-                cat.Montototal = c.Montototal;
-
+                cat.Idclient = c.Idclient;
+                cat.Fchaope = c.Fchaope;
+            
                 _context.Venta.Update(cat);
                 await _context.SaveChangesAsync();
 
                 return cat;
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return StatusCode(500, "Se encontró un error");
+                return StatusCode(500, $"Se encontró un error: {ex.Message}");
             }
         }
         [HttpDelete("{Idventa}")]
@@ -128,7 +130,7 @@ namespace ultima_prueba.Controllers
             if (cat != null)
             {
                 cat.Montototal = montoTotal;
-                cat.Estado = (char)EstadoEnum.FINALIZADO;
+                cat.Estado = ((char)EstadoEnum.FINALIZADO).ToString();
                 _context.Venta.Update(cat);
                 await _context.SaveChangesAsync();
                 return Ok();
@@ -156,7 +158,7 @@ namespace ultima_prueba.Controllers
                    
                 }
 
-                cat.Estado =(char) EstadoEnum.CANCELADO;
+                cat.Estado =((char)EstadoEnum.CANCELADO).ToString();
                 _context.Venta.Update(cat);
                 await _context.SaveChangesAsync();
                 return Ok();

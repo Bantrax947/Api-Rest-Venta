@@ -2,10 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using oracleDataAcess.Models;
 using Microsoft.EntityFrameworkCore;
+using ultima_prueba.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ultima_prueba.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class productoController : ControllerBase
     {
@@ -37,15 +40,21 @@ namespace ultima_prueba.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Producto>> SaveAsync(Producto c)
+        public async Task<ActionResult<Producto>> SaveAsync(ProductoCreateCommand c)
         {
+            Producto producto = new Producto();
+
+            producto.Nombreprod = c.NombreProd;
+            producto.Cantidad = c.Cantidad;
+            producto.Preciounit = c.PrecioUnit;
+
             try
             {
-                await _context.Productos.AddAsync(c);
+                await _context.Productos.AddAsync(producto);
                 await _context.SaveChangesAsync();
-                c.Idproducto = await _context.Productos.MaxAsync(u => u.Idproducto);
+                producto.Idproducto = await _context.Productos.MaxAsync(u => u.Idproducto);
 
-                return c;
+                return producto;
             }
             catch (DbUpdateException)
             {

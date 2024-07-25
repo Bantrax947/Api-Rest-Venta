@@ -2,6 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using oracleDataAcess.Models;
 using ultima_prueba.Controllers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace ultima_prueba
 {
@@ -19,6 +22,33 @@ namespace ultima_prueba
                 
                 )
             );
+            /////////////////////////////////////////////jwt///////////////////
+            builder.Configuration.AddJsonFile("appsettings.json");
+            var secretKey = builder.Configuration.GetSection("JWT").GetSection("Secretkey").ToString();
+            
+            var keyBytes = Encoding.UTF8.GetBytes(secretKey);
+
+            builder.Services.AddAuthentication(config => {
+
+                config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(config => {
+                config.RequireHttpsMetadata = false;
+                config.SaveToken = false;
+                config.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+
+         
+
+          
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////7
             builder.Services.AddControllers();
             // Add services to the container
             builder.Services.AddAuthorization();
@@ -37,11 +67,8 @@ namespace ultima_prueba
             }
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
-
-
             app.MapControllers();
             app.Run();
         }

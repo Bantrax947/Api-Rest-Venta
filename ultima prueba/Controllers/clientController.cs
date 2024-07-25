@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using oracleDataAcess.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ultima_prueba.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class clientController : ControllerBase
     {
