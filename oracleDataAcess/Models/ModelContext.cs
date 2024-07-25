@@ -21,6 +21,8 @@ public partial class ModelContext : DbContext
 
     public virtual DbSet<Producto> Productos { get; set; }
 
+    public virtual DbSet<Usuario> Usuarios { get; set; }
+
     public virtual DbSet<Ventum> Venta { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -115,6 +117,31 @@ public partial class ModelContext : DbContext
                 .HasColumnName("PRECIOUNIT");
         });
 
+        modelBuilder.Entity<Usuario>(entity =>
+        {
+            entity.HasKey(e => e.Idusu).HasName("SYS_C008333");
+
+            entity.ToTable("USUARIO");
+
+            entity.Property(e => e.Idusu)
+                .ValueGeneratedOnAdd()
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("IDUSU");
+            entity.Property(e => e.Pass)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("PASS");
+            entity.Property(e => e.Rol)
+                .HasMaxLength(1)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("ROL");
+            entity.Property(e => e.Username)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("USERNAME");
+        });
+
         modelBuilder.Entity<Ventum>(entity =>
         {
             entity.HasKey(e => e.Idventa).HasName("SYS_C008326");
@@ -147,6 +174,7 @@ public partial class ModelContext : DbContext
         modelBuilder.HasSequence("CLIENTESEQ");
         modelBuilder.HasSequence("DVTASEQ");
         modelBuilder.HasSequence("PRODUCTOSEQ");
+        modelBuilder.HasSequence("USERSEQ");
         modelBuilder.HasSequence("VENTASEQ");
 
         OnModelCreatingPartial(modelBuilder);

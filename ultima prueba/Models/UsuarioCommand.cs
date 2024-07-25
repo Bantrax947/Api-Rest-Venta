@@ -2,7 +2,7 @@
 {
     public class UsuarioCommand
     {
-        public string correo { get; set; }
-        public string clave { get; set; }
+        public string  { get; set; }
+  
     }
 }
